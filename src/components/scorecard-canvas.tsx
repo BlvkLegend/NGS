@@ -4,7 +4,20 @@ import { useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Lock, Share2, Copy, ArrowRight, UserRound, Check } from "lucide-react";
+import { Lock, Share2, Copy, ArrowRight, UserRound, Check, Building2, Eye, ShieldAlert, HeartPulse, GraduationCap, Zap, Briefcase, ShoppingBasket, Scale, Users } from "lucide-react";
+
+const CAT_ICON: Record<string, React.ReactNode> = {
+  Infrastructure:   <Building2 size={10} />,
+  Transparency:     <Eye size={10} />,
+  Security:         <ShieldAlert size={10} />,
+  Healthcare:       <HeartPulse size={10} />,
+  Education:        <GraduationCap size={10} />,
+  "Power Supply":   <Zap size={10} />,
+  "Job Creation":   <Briefcase size={10} />,
+  "Cost of Living": <ShoppingBasket size={10} />,
+  Accountability:   <Scale size={10} />,
+  Responsiveness:   <Users size={10} />,
+};
 import { getRankTitle, leaders } from "@/lib/data";
 import { scoreToSignal, cn } from "@/lib/utils";
 import { useMode } from "@/lib/mode-context";
@@ -187,7 +200,8 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
               <div className="mt-3 space-y-1.5">
                 {leader.categories.slice(0, 4).map((c) => (
                   <div key={c.label} className="flex items-center gap-2">
-                    <span className="truncate text-[10px] text-paper/60 w-28">{c.label}</span>
+                    <span className="text-paper/50 w-3 flex-shrink-0">{CAT_ICON[c.label] ?? <Building2 size={10} />}</span>
+                    <span className="truncate text-[10px] text-paper/60 w-24">{c.label}</span>
                     <div className="flex-1 h-1 rounded-full bg-paper/20 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-paper/70"
@@ -201,7 +215,7 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
             )}
 
             <div className="mt-4 flex items-center justify-between border-t border-paper/15 pt-3">
-              <p className="text-[9px] uppercase tracking-[0.18em] text-paper/40">ngsc.com.ng</p>
+              <p className="text-[9px] uppercase tracking-[0.18em] text-paper/40">ngsc.africa</p>
               <p className="font-mono text-[9px] text-paper/40">#accountability</p>
             </div>
           </div>
