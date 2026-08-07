@@ -200,69 +200,19 @@ export type DemographicProfile = {
   employmentProfile: string;
 };
 
-/** 10-question satirical engine. Each question carries both tonal registers
- *  so the same underlying data drives either interface mode. */
+/** 10-question satirical engine per PRD 3.3. One question per category.
+ *  Each carries both tonal registers; same data drives either mode. */
 export const quizQuestions = [
-  {
-    id: "q1",
-    category: "Infrastructure",
-    taxpayer: "How would you rate visible infrastructure delivered this term?",
-    cruise: "Road wey dem promise, e don show for ground?",
-  },
-  {
-    id: "q2",
-    category: "Transparency",
-    taxpayer: "Has this official published budgets citizens can verify?",
-    cruise: "This oga dey show us where the money enter?",
-  },
-  {
-    id: "q3",
-    category: "Responsiveness",
-    taxpayer: "How reachable has this official been to constituents?",
-    cruise: "If you cry for road, dem hear you or dem dey pretend?",
-  },
-  {
-    id: "q4",
-    category: "Security",
-    taxpayer: "Has safety in the jurisdiction improved under this term?",
-    cruise: "You dey sleep with two eyes closed now, or na one eye dey open?",
-  },
-  {
-    id: "q5",
-    category: "Healthcare",
-    taxpayer: "Rate access to functioning public healthcare.",
-    cruise: "If malaria catch you, hospital go even get paracetamol?",
-  },
-  {
-    id: "q6",
-    category: "Education",
-    taxpayer: "Rate the state of public education under this administration.",
-    cruise: "Public school dey functioning, or na just signboard remain?",
-  },
-  {
-    id: "q7",
-    category: "Power Supply",
-    taxpayer: "Rate consistency of electricity supply this term.",
-    cruise: "NEPA dey show face small small, or na total blackout be that?",
-  },
-  {
-    id: "q8",
-    category: "Job Creation",
-    taxpayer: "Has this official created verifiable employment opportunities?",
-    cruise: "Any job wey this oga bring, or na only WhatsApp promise?",
-  },
-  {
-    id: "q9",
-    category: "Cost of Living",
-    taxpayer: "How has affordability of basic goods changed under this term?",
-    cruise: "Market dey favour common man, or na suffer-and-smile be the gist?",
-  },
-  {
-    id: "q10",
-    category: "Accountability",
-    taxpayer: "Has this official faced any scrutiny for underperformance?",
-    cruise: "If oga chop small, dem dey call am out, or e dey free like that?",
-  },
+  { id: "q1",  category: "Infrastructure", taxpayer: "How would you rate visible infrastructure delivered this term?", cruise: "Road wey dem promise, e don show for ground?" },
+  { id: "q2",  category: "Transparency",   taxpayer: "Has this official published budgets and project records citizens can actually verify?", cruise: "This oga dey show us where the money enter, or na silence full everywhere?" },
+  { id: "q3",  category: "Security",       taxpayer: "Has safety in this jurisdiction meaningfully improved under this term?", cruise: "You dey sleep with both eyes closed now, or one eye still open?" },
+  { id: "q4",  category: "Healthcare",     taxpayer: "Rate access to functioning public healthcare under this administration.", cruise: "If malaria catch you, hospital go even have paracetamol?" },
+  { id: "q5",  category: "Education",      taxpayer: "Rate the condition of public schools and learning outcomes this term.", cruise: "Public school dey actually work, or na just signboard and empty compound?" },
+  { id: "q6",  category: "Power Supply",   taxpayer: "Rate the consistency of electricity supply in this jurisdiction.", cruise: "NEPA dey show face at all, or na fuel generator full everywhere?" },
+  { id: "q7",  category: "Job Creation",   taxpayer: "Has this official created verifiable employment beyond announcements?", cruise: "Any real job wey this oga bring, or na WhatsApp flyer promise?" },
+  { id: "q8",  category: "Economy",        taxpayer: "Has the cost of basic goods and services improved under this term?", cruise: "Market dey favour common man at all, or na suffer-and-smile full everywhere?" },
+  { id: "q9",  category: "Responsiveness", taxpayer: "How accessible and responsive has this official been to constituents?", cruise: "If you bring problem go their office, dem attend to you or ghost you?" },
+  { id: "q10", category: "Accountability", taxpayer: "Has this official faced real scrutiny or consequences for failures?", cruise: "If oga chop money or fail, dem call am out or e dey go free?" },
 ] as const;
 
 /** Satirical rank titles by score band, per interface mode. */
