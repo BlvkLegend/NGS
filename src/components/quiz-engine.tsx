@@ -42,6 +42,14 @@ const CRUISE_LABELS: Record<string, string> = {
   F: "Certified sapa minister",
 };
 
+const GRADE_COLORS: Record<string, string> = {
+  A: "text-signal-good border-signal-good",
+  B: "text-forest-500 border-forest-500",
+  C: "text-signal-mid border-signal-mid",
+  D: "text-cruise-500 border-cruise-500",
+  F: "text-signal-low border-signal-low",
+};
+
 const TAXPAYER_LABELS: Record<string, string> = {
   A: "Excellent",
   B: "Good",
@@ -170,7 +178,11 @@ export function QuizEngine({ leader }: { leader: Leader }) {
                           : "border-paper/20 bg-black/52 backdrop-blur-sm hover:border-paper/40 hover:bg-black/62"
                       }`}
                     >
-                      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-mono text-[14px] font-bold ${selected ? "bg-paper/20 text-paper" : "border border-paper/30 text-paper/72"}`}>
+                      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-mono text-[14px] font-bold border ${
+                        selected
+                          ? "bg-white/20 border-white/40 text-white"
+                          : GRADE_COLORS[opt.label]
+                      }`}>
                         {selected ? <Check size={13} className="text-white" /> : opt.label}
                       </span>
                       <div className="min-w-0 flex-1">
