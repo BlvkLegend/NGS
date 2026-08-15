@@ -213,44 +213,41 @@ export function LeadersUnified() {
                 <Link
                   key={leader.slug}
                   href={`/leaders/${leader.slug}`}
-                  className="grid grid-cols-[2.5rem_auto_1fr_5rem] items-center gap-3 border-b border-line bg-paper-raised px-4 py-3 last:border-b-0 transition-colors hover:bg-forest-tint/30"
+                  className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b border-line bg-paper-raised px-4 py-3 last:border-b-0 transition-colors hover:bg-forest-tint/30 sm:grid-cols-[2.5rem_1fr_10rem_3.5rem]"
                 >
-                  {/* Rank number + delta stacked */}
+                  {/* Rank + trend */}
                   <div className="flex flex-col items-center">
                     <span className="font-mono text-[13px] font-black leading-none text-ink">{i + 1}</span>
                     <TrendBadge delta={leader.trendDelta} trend={leader.trend} />
                   </div>
 
-                  {/* Photo */}
-                  <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-line/40">
-                    {leader.photoUrl ? (
-                      <img src={leader.photoUrl} alt="" aria-hidden className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-ink-muted">
-                        <UserRound size={15} strokeWidth={1.5} />
-                      </div>
-                    )}
+                  {/* Avatar + name block */}
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-line/40">
+                      {leader.photoUrl ? (
+                        <img src={leader.photoUrl} alt="" aria-hidden className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-ink-muted">
+                          <UserRound size={15} strokeWidth={1.5} />
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-ink">{leader.name}</p>
+                      <p className="truncate text-[11px] text-ink-muted">
+                        {leader.party} · {leader.evaluations.toLocaleString()} evals
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Name + role */}
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-ink">{leader.name}</p>
-                    <p className="truncate text-[11px] text-ink-muted sm:hidden">
-                      {leader.role} · {leader.jurisdiction}
-                    </p>
-                    <p className="hidden truncate text-[11px] text-ink-muted sm:block">
-                      {leader.party} · {leader.evaluations.toLocaleString()} evals
-                    </p>
-                  </div>
-
-                  {/* Role · state (desktop) */}
+                  {/* Role · state — desktop only */}
                   <div className="hidden min-w-0 sm:block">
-                    <p className="truncate text-[11px] text-ink-muted">{leader.role}</p>
-                    <p className="truncate text-[10px] text-ink-muted/70">{leader.jurisdiction}</p>
+                    <p className="truncate text-[12px] text-ink">{leader.role}</p>
+                    <p className="truncate text-[11px] text-ink-muted">{leader.jurisdiction}</p>
                   </div>
 
                   {/* Score ring */}
-                  <div className="flex justify-center">
+                  <div className="flex justify-end sm:justify-center">
                     <ScoreRing score={catScore} size={38} />
                   </div>
                 </Link>
