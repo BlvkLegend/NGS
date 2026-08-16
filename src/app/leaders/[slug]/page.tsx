@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { leaders } from "@/lib/data";
 import { scoreToGrade } from "@/lib/utils";
+import { asset } from "@/lib/asset";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { NgscCardVisual } from "@/components/ngsc-card-visual";
@@ -38,13 +39,24 @@ export default async function LeaderProfilePage({
         {/* Landmark banner - state landmark photo + name overlay */}
         <div className="mt-5">
           <LandmarkBanner jurisdiction={leader.jurisdiction} height="h-32 sm:h-36">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60">
-              {leader.role} · {leader.jurisdiction}
-            </span>
-            <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">{leader.name}</h1>
-            <p className="mt-0.5 text-[12px] text-white/60">
-              {leader.party} · In office since {leader.tookOffice}
-            </p>
+            <div className="flex items-end gap-4">
+              {leader.photoUrl && (
+                <img
+                  src={asset(leader.photoUrl)}
+                  alt={leader.name}
+                  className="h-16 w-16 shrink-0 rounded-full object-cover object-top border-2 border-white/40 shadow-lg"
+                />
+              )}
+              <div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60">
+                  {leader.role} · {leader.jurisdiction}
+                </span>
+                <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">{leader.name}</h1>
+                <p className="mt-0.5 text-[12px] text-white/60">
+                  {leader.party} · In office since {leader.tookOffice}
+                </p>
+              </div>
+            </div>
           </LandmarkBanner>
         </div>
 
