@@ -8,6 +8,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { quizQuestions, scoreOptions } from "@/lib/data";
 import { useMode } from "@/lib/mode-context";
 import { getLandmark, landmarkVariant } from "@/lib/landmarks";
+import { asset } from "@/lib/asset";
 import type { Leader } from "@/lib/data";
 
 // Per-category Unsplash images that actually match the question topic
@@ -131,12 +132,20 @@ export function QuizEngine({ leader }: { leader: Leader }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Sticky header */}
-      <div className="sticky top-0 z-20 px-6 py-3" style={{ background: "rgba(0,0,0,0.60)", backdropFilter: "blur(10px)" }}>
+      {/* Sticky header — sits below the 64px site nav */}
+      <div className="sticky top-16 z-20 px-4 pb-2.5 pt-2" style={{ background: "rgba(0,0,0,0.60)", backdropFilter: "blur(10px)" }}>
         <div className="mx-auto max-w-2xl">
-          <div className="mb-2 flex items-center justify-between text-[12px]">
-            <span className="font-medium text-white">{leader.name}</span>
-            <span className="text-white/55">{step + 1} of {total}</span>
+          {/* Story-style top row: avatar + name on left, step count on right */}
+          <div className="mb-2 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-white/35 bg-white/12">
+                {leader.photoUrl
+                  ? <img src={asset(leader.photoUrl)} alt={leader.name} className="h-full w-full object-cover object-top" />
+                  : <span className="flex h-full w-full items-center justify-center font-mono text-[11px] font-bold text-white">{leader.name[0]}</span>}
+              </div>
+              <span className="text-[13px] font-semibold text-white leading-none">{leader.name}</span>
+            </div>
+            <span className="text-[11px] text-white/55">{step + 1} of {total}</span>
           </div>
           <ProgressBar current={step + 1} total={total} dark />
         </div>
