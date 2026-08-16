@@ -1,5 +1,6 @@
 import { GradeBadge } from "@/components/grade-badge";
 import { scoreToSignal } from "@/lib/utils";
+import { asset } from "@/lib/asset";
 import type { Leader } from "@/lib/data";
 
 const SIGNAL_BG: Record<string, string> = {
@@ -36,12 +37,23 @@ export function NgscCardVisual({
       </div>
 
       <div className="px-6 pb-6 pt-3">
-        <h3 className="font-display text-2xl font-semibold leading-tight text-ink">
-          {leader.name}
-        </h3>
-        <p className="mt-1 text-[13px] text-ink-muted">
-          {leader.role} · {leader.jurisdiction}
-        </p>
+        <div className="flex items-center gap-3">
+          {leader.photoUrl && (
+            <img
+              src={asset(leader.photoUrl)}
+              alt={leader.name}
+              className="h-12 w-12 shrink-0 rounded-full object-cover object-top border border-line"
+            />
+          )}
+          <div className="min-w-0">
+            <h3 className="font-display text-2xl font-semibold leading-tight text-ink">
+              {leader.name}
+            </h3>
+            <p className="mt-0.5 text-[13px] text-ink-muted">
+              {leader.role} · {leader.jurisdiction}
+            </p>
+          </div>
+        </div>
 
         <div className="mt-5 flex items-center gap-4">
           <GradeBadge score={leader.score} size="lg" />
