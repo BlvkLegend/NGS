@@ -7,6 +7,7 @@ import { leaders } from "@/lib/data";
 import { useMode } from "@/lib/mode-context";
 import { scoreToSignal } from "@/lib/utils";
 import { asset } from "@/lib/asset";
+import { asset } from "@/lib/asset";
 
 const SIGNAL_COLOR: Record<string, string> = {
   good: "var(--signal-good)",
@@ -47,19 +48,14 @@ function TrendBadge({ delta, trend }: { delta?: string; trend: "up" | "down" | "
 const OFFICE_TYPES = ["All", "Governor", "Senator", "Local Government Chairman", "Minister"] as const;
 type OfficeFilter = typeof OFFICE_TYPES[number];
 
-// Ranking categories - shown as sortable chips
+// Ranking categories - user-facing discovery lenses, not governance sectors
 const RANK_CATEGORIES = [
-  "Overall",
-  "Infrastructure",
-  "Education",
-  "Healthcare",
-  "Transparency",
-  "Security",
-  "Power Supply",
-  "Job Creation",
-  "Economy",
-  "Responsiveness",
-  "Accountability",
+  "Most evaluated",
+  "Least evaluated",
+  "Highest score",
+  "Lowest score",
+  "Trending up",
+  "Trending down",
 ] as const;
 type RankCategory = typeof RANK_CATEGORIES[number];
 
@@ -67,9 +63,7 @@ export function LeadersUnified() {
   const { mode } = useMode();
   const [query, setQuery]               = useState("");
   const [officeFilter, setOfficeFilter] = useState<OfficeFilter>("All");
-  const [rankCategory, setRankCategory] = useState<RankCategory>("Overall");
-  const [rankDir, setRankDir]           = useState<"desc" | "asc">("desc");
-
+  const [rankCategory, setRankCategory] = useState<RankCategory>("Highest score");
 
   // 1. Filter by office type + search
   const filtered = useMemo(() => {
@@ -90,17 +84,19 @@ export function LeadersUnified() {
     return list;
   }, [query, officeFilter]);
 
-  // 2. Sort by chosen ranking category
+  // 2. Sort/filter by chosen ranking category
   const ranked = useMemo(() => {
-    return [...filtered].sort((a, b) => {
-      const getVal = (l: typeof leaders[number]) => {
-        if (rankCategory === "Overall") return l.score;
-        const cat = l.categories.find((c) => c.label === rankCategory);
-        return cat?.score ?? 0;
-      };
-      return rankDir === "desc" ? getVal(b) - getVal(a) : getVal(a) - getVal(b);
-    });
-  }, [filtered, rankCategory, rankDir]);
+    const base = [...filtered];
+    switch (rankCategory) {
+      case "Most evaluated":   return base.sort((a, b) => b.evaluations - a.evaluations);
+      case "Least evaluated":  return base.sort((a, b) => a.evaluations - b.evaluations);
+      case "Highest score":    return base.sort((a, b) => b.score - a.score);
+      case "Lowest score":     return base.sort((a, b) => a.score - b.score);
+      case "Trending up":      return base.filter((l) => l.trend === "up").sort((a, b) => b.score - a.score);
+      case "Trending down":    return base.filter((l) => l.trend === "down").sort((a, b) => a.score - b.score);
+      default:                 return base.sort((a, b) => b.score - a.score);
+    }
+  }, [filtered, rankCategory]);
 
   return (
     <div>
@@ -162,37 +158,32 @@ export function LeadersUnified() {
             ))}
           </div>
 
-          {/* Rank by: dropdown + asc/desc toggle - right side */}
+          {/* Rank by: dropdown - right side */}
           <div className="flex items-center gap-1.5 shrink-0">
             <span className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
               Rank by:
             </span>
             <select
               value={rankCategory}
-              onChange={(e) => { setRankCategory(e.target.value as RankCategory); setRankDir("desc"); }}
+              onChange={(e) => setRankCategory(e.target.value as RankCategory)}
               className="rounded-lg border border-line bg-paper-raised px-2.5 py-1 text-[12px] font-medium text-ink outline-none focus-visible:border-forest-500"
             >
-              {RANK_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
+              {RANK_CATEGORIES.map((cat) => {
+                const cruiseLabel: Record<string, string> = {
+                  "Most evaluated":  "Most dragged",
+                  "Least evaluated": "Least dragged",
+                  "Highest score":   "Who dey shine",
+                  "Lowest score":    "Who dey fall",
+                  "Trending up":     "On the rise",
+                  "Trending down":   "On the drop",
+                };
+                return (
+                  <option key={cat} value={cat}>
+                    {mode === "cruise" ? cruiseLabel[cat] : cat}
+                  </option>
+                );
+              })}
             </select>
-            <button
-              onClick={() => setRankDir((d) => d === "desc" ? "asc" : "desc")}
-              aria-label={rankDir === "desc" ? "Sort ascending" : "Sort descending"}
-              className="flex h-7 w-7 items-center justify-center rounded-lg border border-line bg-paper-raised text-ink-muted transition-colors hover:border-line-strong hover:text-ink"
-            >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                {rankDir === "desc" ? (
-                  <>
-                    <path d="M2 3h9M2 6.5h6M2 10h3" />
-                  </>
-                ) : (
-                  <>
-                    <path d="M2 3h3M2 6.5h6M2 10h9" />
-                  </>
-                )}
-              </svg>
-            </button>
           </div>
         </div>
 
@@ -205,9 +196,9 @@ export function LeadersUnified() {
             </div>
           ) : (
             ranked.map((leader, i) => {
-              const catScore = rankCategory === "Overall"
-                ? leader.score
-                : (leader.categories.find((c) => c.label === rankCategory)?.score ?? leader.score);
+              const catScore = (rankCategory === "Most evaluated" || rankCategory === "Least evaluated")
+                ? leader.evaluations
+                : leader.score;
 
               return (
                 <Link
@@ -261,7 +252,7 @@ export function LeadersUnified() {
           {ranked.length} {ranked.length === 1 ? "official" : "officials"}
           {officeFilter !== "All" ? ` · ${officeFilter}` : ""}
           {query ? ` matching "${query}"` : ""}
-          {" "}· sorted by {rankCategory} {rankDir === "desc" ? "(highest first)" : "(lowest first)"}
+          {" "}· {rankCategory.toLowerCase()}
         </p>
       </div>
     </div>
