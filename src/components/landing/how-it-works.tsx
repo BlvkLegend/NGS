@@ -204,7 +204,7 @@ export function HowItWorks() {
             {/* Shareable link preview */}
             <div className="mt-3 rounded-lg border border-line bg-paper px-3 py-2">
               <p className="text-[9px] text-ink-muted/60 uppercase tracking-wide mb-0.5">Share link</p>
-              <p className="font-mono text-[10px] text-ink-muted truncate">ngsc.ng/card/charles-soludo</p>
+              <p className="font-mono text-[10px] text-ink-muted truncate">ngsc.ng/card/leader</p>
             </div>
             {/* Record indicator */}
             <div className="mt-2 flex items-center gap-1.5">
