@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { UserRound } from "lucide-react";
+import { asset } from "@/lib/asset";
 import { leaders } from "@/lib/data";
 import { useMode } from "@/lib/mode-context";
 import { scoreToSignal } from "@/lib/utils";
@@ -72,6 +73,13 @@ function SideLandmark({
           <ScoreRing score={leader.score} />
           <span className={`font-mono text-[10px] font-black ${wins ? "text-signal-good" : "text-white/50"}`}>{grade}</span>
         </div>
+        {leader.photoUrl && (
+          <img
+            src={asset(leader.photoUrl)}
+            alt={leader.name}
+            className="h-10 w-10 shrink-0 rounded-full object-cover object-top border border-white/30"
+          />
+        )}
         <div className={`min-w-0 flex-1 ${mirror ? "text-right" : ""}`}>
           <p className={`truncate text-[13px] font-bold leading-tight ${wins ? "text-white" : "text-white/60"}`}>{leader.name}</p>
           <p className="truncate text-[10px] text-white/50">{leader.jurisdiction}</p>
@@ -351,6 +359,11 @@ function LeaderSelect({
                     onClick={() => { onChange(l.slug); setOpen(false); setQuery(""); }}
                     className={`flex w-full items-center gap-2.5 px-3 py-2.5 text-left transition-colors hover:bg-line/40 ${l.slug === value ? "bg-forest-tint" : ""}`}
                   >
+                    <div className="h-7 w-7 shrink-0 overflow-hidden rounded-full bg-line/40">
+                      {l.photoUrl
+                        ? <img src={asset(l.photoUrl)} alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                        : <span className="flex h-full w-full items-center justify-center font-mono text-[10px] font-bold text-ink-muted">{l.name[0]}</span>}
+                    </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[13px] font-medium text-ink">{l.name}</p>
                       <p className="truncate text-[11px] text-ink-muted">{l.role ?? ""} · {l.jurisdiction}</p>
