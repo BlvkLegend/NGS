@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   DESIGN TOKENS / NGSC
+   A civic ledger, not a SaaS dashboard.
+   ============================================================ */
+
+:root {
+  --paper: #ffffff;
+  --paper-raised: #f7f7f8;
+  --ink: #0d0d0f;
+  --ink-muted: #5c5f66;
+  --line: #e6e6e9;
+  --line-strong: #cfcfd4;
+
+  --forest-900: #0a2e22;
+  --forest-700: #0e5236;
+  --forest-500: #167a4a;
+  --forest-300: #6fae87;
+  --forest-tint: #e7efe6;
+
+  --signal-good: #167a4a;
+  --signal-mid: #8a6d1f;
+  --signal-low: #9c3b30;
+
+  --cruise-500: #d9720f;
+  --cruise-700: #b8590a;
+  --cruise-tint: #fdeee0;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --shadow-card: 0 1px 0 rgba(13,13,15,0.04), 0 12px 24px -16px rgba(13,13,15,0.14);
+}
+
+.dark {
+  --paper: #08090a;
+  --paper-raised: #101113;
+  --ink: #f4f4f5;
+  --ink-muted: #a8a9b0;
+  --line: #1d1e21;
+  --line-strong: #32333a;
+
+  --forest-900: #0d2218;
+  --forest-700: #122c1e;
+  --forest-500: #3fae74;
+  --forest-300: #6fcd96;
+  --forest-tint: #14201a;
+
+  --signal-good: #4bbf83;
+  --signal-mid: #c9a23f;
+  --signal-low: #d97462;
+
+  --cruise-500: #ff9d3d;
+  --cruise-700: #ffb765;
+  --cruise-tint: #241a10;
+
+  --shadow-card: 0 1px 0 rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.7);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-forest-900: var(--forest-900);
+  --color-forest-700: var(--forest-700);
+  --color-forest-500: var(--forest-500);
+  --color-forest-300: var(--forest-300);
+  --color-forest-tint: var(--forest-tint);
+
+  --color-signal-good: var(--signal-good);
+  --color-signal-mid: var(--signal-mid);
+  --color-signal-low: var(--signal-low);
+
+  --color-cruise-500: var(--cruise-500);
+  --color-cruise-700: var(--cruise-700);
+  --color-cruise-tint: var(--cruise-tint);
+
+  --font-display: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ledger-index {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--forest-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--forest-500);
+  color: var(--paper);
+}
