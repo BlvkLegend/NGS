@@ -139,14 +139,17 @@ function TaxpayerCard({
   leader,
   score,
   rank,
+  rankSub,
   variant,
 }: {
   leader: Leader;
   score: number;
   rank: string;
+  rankSub: string;
   variant: typeof TEXTILE_VARIANTS[number];
 }) {
   const grade = scoreToGrade(score);
+
   return (
     <div className="relative mx-auto flex aspect-[9/16] w-full max-w-[320px] flex-col justify-between overflow-hidden rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
       {/* Textile pattern fills entire card */}
@@ -156,11 +159,13 @@ function TaxpayerCard({
         aria-hidden
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
+
       {/* Dark overlay - ensures all text reads */}
       <div
         className="absolute inset-0"
         style={{ background: variant.overlay }}
       />
+
       {/* Bottom-weighted extra darkness for text area */}
       <div
         className="absolute inset-0"
@@ -235,14 +240,17 @@ function CruiseCard({
   leader,
   score,
   rank,
+  rankSub,
   variant,
 }: {
   leader: Leader;
   score: number;
   rank: string;
+  rankSub: string;
   variant: typeof CRUISE_VARIANTS[number];
 }) {
   const grade = scoreToGrade(score);
+
   return (
     <div className="relative mx-auto flex aspect-[9/16] w-full max-w-[320px] flex-col justify-between overflow-hidden rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
       {/* Landmark photo */}
@@ -252,6 +260,7 @@ function CruiseCard({
         aria-hidden
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
+
       {/* Vertical gradient - light mid, dark top/bottom */}
       <div
         className="absolute inset-0"
@@ -289,6 +298,7 @@ function CruiseCard({
                 </div>
               </div>
             </div>
+
             {/* Score + grade */}
             <div className="flex flex-col items-center">
               <p className="font-mono text-[3.5rem] font-black leading-none text-white drop-shadow-lg">{score}</p>
@@ -356,10 +366,10 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
 
   // Card variant pickers - separate per mode
   const [textileId, setTextileId] = useState<TextileId>("ankara");
-  const [cruiseId, setCruiseId]   = useState<CruiseId>("lekki");
-  const [caption, setCaption]     = useState("");
+  const [cruiseId, setCruiseId] = useState<CruiseId>("lekki");
+  const [caption, setCaption] = useState("");
   const [captionSaved, setCaptionSaved] = useState(false);
-  const [entryId, setEntryId]     = useState<string | null>(null);
+  const [entryId, setEntryId] = useState<string | null>(null);
 
   // Auto-post to community feed on mount
   useEffect(() => {
@@ -378,10 +388,10 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
   }, []);
 
   const activeTextile = TEXTILE_VARIANTS.find((v) => v.id === textileId)!;
-  const activeCruise  = CRUISE_VARIANTS.find((v) => v.id === cruiseId)!;
+  const activeCruise = CRUISE_VARIANTS.find((v) => v.id === cruiseId)!;
 
   const [unlocked, setUnlocked] = useState(false);
-  const [copied, setCopied]     = useState(false);
+  const [copied, setCopied] = useState(false);
   const focusHandlerRef = useRef<(() => void) | null>(null);
 
   function armFocusUnlock() {
@@ -410,10 +420,12 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
       );
       return;
     }
+
     const intent =
       platform === "whatsapp"
         ? `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`
         : `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+
     armFocusUnlock();
     window.open(intent, "_blank", "noopener,noreferrer");
   }
@@ -435,7 +447,8 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
       {/* Page landmark background */}
       <img src={bgPhoto} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-center" loading="eager" />
       <div
-        aria-hidden className="absolute inset-0"
+        aria-hidden
+        className="absolute inset-0"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.40) 20%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.88) 80%, rgba(0,0,0,0.97) 100%)" }}
       />
 
@@ -452,9 +465,21 @@ export function ScorecardCanvas({ leader }: { leader: Leader }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             {mode === "taxpayer" ? (
-              <TaxpayerCard leader={leader} score={score} rank={rank} variant={activeTextile} />
+              <TaxpayerCard
+                leader={leader}
+                score={score}
+                rank={rank}
+                rankSub={rankSub}
+                variant={activeTextile}
+              />
             ) : (
-              <CruiseCard leader={leader} score={score} rank={rank} variant={activeCruise} />
+              <CruiseCard
+                leader={leader}
+                score={score}
+                rank={rank}
+                rankSub={rankSub}
+                variant={activeCruise}
+              />
             )}
           </motion.div>
 
