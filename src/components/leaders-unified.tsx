@@ -7,7 +7,6 @@ import { leaders } from "@/lib/data";
 import { useMode } from "@/lib/mode-context";
 import { scoreToSignal } from "@/lib/utils";
 import { asset } from "@/lib/asset";
-import { asset } from "@/lib/asset";
 
 const SIGNAL_COLOR: Record<string, string> = {
   good: "var(--signal-good)",
