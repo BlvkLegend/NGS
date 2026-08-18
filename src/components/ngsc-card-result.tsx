@@ -266,7 +266,26 @@ export function NgscCardResult({ leader }: { leader: Leader }) {
           >
             Compare <ArrowRight size={15} />
           </Link>
-          {/* Evaluate someone else */}\n          <Link\n            href=\"/select\"\n            className=\"ml-auto flex items-center gap-1.5 rounded-full border border-white/25 px-5 py-2.5 text-[14px] font-medium text-white/70 hover:border-white/50 hover:text-white\"\n          >\n            {mode === \"cruise\" ? \"Evaluate another leader\" : \"Evaluate someone else\"} <ArrowRight size={15} />\n          </Link>\n        </div>\n\n        {/* NGSC logo bottom-right branding */}\n        <div className=\"mt-6 flex justify-end\">\n          <img src={asset(\"/ngsc-logo.png\")} alt=\"NGSC\" className=\"h-8 w-auto opacity-60\" />\n        </div>
+          {/* Evaluate someone else */}
+          <Link
+            href="/select"
+            className="ml-auto flex items-center gap-1.5 rounded-full border border-white/25 px-5 py-2.5 text-[14px] font-medium text-white/70 hover:border-white/50 hover:text-white"
+          >
+            {mode === "cruise"
+              ? "Evaluate another leader"
+              : "Evaluate someone else"}{" "}
+            <ArrowRight size={15} />
+          </Link>
+          </div>
+          
+          {/* NGSC logo bottom-right branding */}
+          <div className="mt-6 flex justify-end">
+            <img
+              src={asset("/ngsc-logo.png")}
+              alt="NGSC"
+              className="h-8 w-auto opacity-60"
+            />
+          </div>
       </div>
     </div>
   );
