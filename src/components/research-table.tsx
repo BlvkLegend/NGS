@@ -127,6 +127,9 @@ export function ResearchTable() {
         </table>
       </div>
     </div>
-    {showPaywall && <PaywallModal onClose={() => setShowPaywall(false)} />}
+    {showPaywall && (
+      <PaywallModal onClose={() => setShowPaywall(false)} />
+    )}
+  </div>
   );
 }
